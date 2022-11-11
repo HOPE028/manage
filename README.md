@@ -1,3 +1,3 @@
 # Manage
 
-*Ongoing project..*
+*Ongoing project...*
