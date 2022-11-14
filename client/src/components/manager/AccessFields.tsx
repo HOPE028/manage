@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { collection, addDoc, setDoc, doc } from 'firebase/firestore'
+import React, { useState, useEffect, useRef } from 'react'
+import { collection, addDoc, setDoc, doc, getDoc } from 'firebase/firestore'
 import { useAuth } from '../../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { db } from '../../firebase-config'
@@ -28,13 +28,24 @@ export default function AccessFields(props: InterfaceInformationFields) {
 
   const { currentUser } = useAuth()
 
-  const [classInformation, setClassInformation] = useState()
+  const [userInformation, setUserInformation] = useState({})
 
   useEffect(() => {
-    console.log(currentUser.uid)
+    const getData = async () => {
+      const userRef = doc(db, 'Users', currentUser.uid)
+      const user: any = await getDoc(userRef)
 
-    const getData = async () => {}
-    getData()
+      console.log(user)
+
+      const userObject = {
+        classCode:
+          user._document.data.value.mapValue.fields.classCode.stringValue,
+        email: user._document.data.value.mapValue.fields.email.stringValue,
+        role: user._document.data.value.mapValue.fields.role.stringValue,
+      }
+      setUserInformation(userObject)
+    }
+    // getData()
   }, [])
 
   const handleChange = (
@@ -88,7 +99,8 @@ export default function AccessFields(props: InterfaceInformationFields) {
   }
 
   const handlePageChange = async () => {
-    // props.setClassPage(props.classPage + 1)
+    if (!userInformation) return
+
     try {
       console.log('here')
 
@@ -111,6 +123,8 @@ export default function AccessFields(props: InterfaceInformationFields) {
       <h3>On All Member Pages</h3>
 
       <h4>General</h4>
+
+      <button onClick={() => console.log()}>Help me</button>
 
       <button onClick={() => console.log(generalMember)}>Data **</button>
       <DifferentAccessLevels
