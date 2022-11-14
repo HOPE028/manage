@@ -32,6 +32,9 @@ export default function AccessFields(props: InterfaceInformationFields) {
 
   useEffect(() => {
     console.log(currentUser.uid)
+
+    const getData = async () => {}
+    getData()
   }, [])
 
   const handleChange = (
