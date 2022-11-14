@@ -4,6 +4,13 @@ import { useAuth } from '../../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { db } from '../../firebase-config'
 import { InterfaceInformationFields } from './SignUp'
+import { classCode } from './PasswordAndEmail'
+import {
+  exampleObject1,
+  exampleObject2,
+  exampleObject3,
+  exampleObject4,
+} from './ExampleObjects'
 
 interface fieldChosen {
   name: string
@@ -11,39 +18,6 @@ interface fieldChosen {
 }
 
 export default function AccessFields(props: InterfaceInformationFields) {
-  let exampleObject1: Array<fieldChosen>
-  let exampleObject2: Array<fieldChosen>
-  let exampleObject3: Array<fieldChosen>
-  let exampleObject4: Array<fieldChosen>
-
-  exampleObject1 = [
-    {
-      name: '',
-      type: 'Custom',
-    },
-  ]
-
-  exampleObject2 = [
-    {
-      name: '',
-      type: 'Custom',
-    },
-  ]
-
-  exampleObject3 = [
-    {
-      name: '',
-      type: 'Custom',
-    },
-  ]
-
-  exampleObject4 = [
-    {
-      name: '',
-      type: 'Custom',
-    },
-  ]
-
   const [generalMember, setGeneralMember] = useState(exampleObject1)
   const [generalIndividual, setGeneralIndividual] = useState(exampleObject2)
   const [memberMember, setMemberMember] = useState(exampleObject3)
@@ -51,6 +25,14 @@ export default function AccessFields(props: InterfaceInformationFields) {
 
   const [showGeneralIndividual, setShowGeneralIndividual] = useState(1)
   const [showMemberIndividual, setShowMemberIndividual] = useState(1)
+
+  const { currentUser } = useAuth()
+
+  const [classInformation, setClassInformation] = useState()
+
+  useEffect(() => {
+    console.log(currentUser.uid)
+  }, [])
 
   const handleChange = (
     fields: Array<fieldChosen>,
@@ -99,6 +81,24 @@ export default function AccessFields(props: InterfaceInformationFields) {
       showMemberIndividual === 0
     ) {
       setShowMemberIndividual(1)
+    }
+  }
+
+  const handlePageChange = async () => {
+    // props.setClassPage(props.classPage + 1)
+    try {
+      console.log('here')
+
+      const rulesCollectionRef = collection(db, 'Class', classCode, 'Rules')
+
+      const docRef = doc(db, 'Class', classCode, 'Rules', 'General')
+
+      await setDoc(docRef, {
+        name: 'Rules',
+        test: 'Yes',
+      })
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -202,6 +202,8 @@ export default function AccessFields(props: InterfaceInformationFields) {
       >
         Data
       </button>
+
+      <button onClick={() => handlePageChange()}>Next</button>
     </div>
   )
 }

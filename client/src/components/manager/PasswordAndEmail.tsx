@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { db } from '../../firebase-config'
 import { map } from '@firebase/util'
 
+export const classCode = randomNumberGenerator(9)
+
 export default function PasswordAndEmail() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -24,8 +26,6 @@ export default function PasswordAndEmail() {
       let submission = newSubmission.user
 
       const docRef = doc(db, 'Users', submission.uid)
-
-      const classCode = randomNumberGenerator(9)
 
       await setDoc(docRef, {
         role: 'Manager',
