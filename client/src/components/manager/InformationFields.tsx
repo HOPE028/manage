@@ -42,6 +42,24 @@ export default function InformationFields(props: InterfaceInformationFields) {
     return false
   }
 
+  const handleNextPage = (value: number) => {
+    let list = [...props.originalFields]
+    list.push({
+      name: 'Name',
+      label: 'Name of user',
+      value: true,
+      valueType: 'text',
+    })
+    list.push({
+      name: 'Hours',
+      label: 'Number of hours a user has registered',
+      value: true,
+      valueType: 'number',
+    })
+    props.setOriginalFields(list)
+    props.setClassPage(value)
+  }
+
   return (
     <div>
       <h4 style={{ color: 'red' }}>{error}</h4>
@@ -111,9 +129,7 @@ export default function InformationFields(props: InterfaceInformationFields) {
         )
       })}
 
-      <button onClick={() => props.setClassPage(props.classPage + 1)}>
-        Next
-      </button>
+      <button onClick={() => handleNextPage(props.classPage + 1)}>Next</button>
     </div>
   )
 }

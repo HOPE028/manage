@@ -39,47 +39,53 @@ export default function PasswordAndEmail() {
         size: 0,
       })
 
+      const docRef_users = collection(db, 'Class', classCode, 'Users')
+
+      await addDoc(docRef_users, {
+        fake: true,
+      })
+
       // Members
 
-      const docRef_Members = doc(db, 'Class', classCode, 'Users', 'Members')
+      // const docRef_Members = doc(db, 'Class', classCode, 'Users', 'Members')
 
-      await setDoc(docRef_Members, {
-        size: 0,
-      })
+      // await setDoc(docRef_Members, {
+      //   size: 0,
+      // })
 
-      const newCollectionRef_Member = collection(
-        db,
-        'Class',
-        classCode,
-        'Users',
-        'Members',
-        'People'
-      )
+      // const newCollectionRef_Member = collection(
+      //   db,
+      //   'Class',
+      //   classCode,
+      //   'Users',
+      //   'Members',
+      //   'People'
+      // )
 
-      await addDoc(newCollectionRef_Member, {
-        fake: true,
-      })
+      // await addDoc(newCollectionRef_Member, {
+      //   fake: true,
+      // })
 
-      // Manager
+      // // Manager
 
-      const docRef_Manager = doc(db, 'Class', classCode, 'Users', 'Manager')
+      // const docRef_Manager = doc(db, 'Class', classCode, 'Users', 'Manager')
 
-      await setDoc(docRef_Manager, {
-        size: 0,
-      })
+      // await setDoc(docRef_Manager, {
+      //   size: 0,
+      // })
 
-      const newCollectionRef_Manager = collection(
-        db,
-        'Class',
-        classCode,
-        'Users',
-        'Manager',
-        'People'
-      )
+      // const newCollectionRef_Manager = collection(
+      //   db,
+      //   'Class',
+      //   classCode,
+      //   'Users',
+      //   'Manager',
+      //   'People'
+      // )
 
-      await addDoc(newCollectionRef_Manager, {
-        fake: true,
-      })
+      // await addDoc(newCollectionRef_Manager, {
+      //   fake: true,
+      // })
 
       // navigate('')
     } catch (error) {

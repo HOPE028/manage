@@ -18,6 +18,7 @@ export interface fieldInterface {
   name: string
   value: Boolean
   label: string
+  valueType: string
 }
 
 export default function SignUp() {
@@ -35,34 +36,37 @@ function ClassRules() {
   const [loading, setLoading] = useState(false)
   const [classPage, setClassPage] = useState(1)
 
-  let firstExample: Array<customFieldInterface>
+  let customExample: Array<customFieldInterface>
 
-  firstExample = [{ name: '', valueType: 'Text' }]
+  customExample = [{ name: '', valueType: 'Text' }]
 
-  const [fields, setFields] = useState(firstExample)
+  const [fields, setFields] = useState(customExample)
 
-  let secondExample: Array<fieldInterface>
+  let originalExample: Array<fieldInterface>
 
-  secondExample = [
+  originalExample = [
     {
       name: 'Photos',
       label: 'Every Member can have a profile picture',
       value: false,
+      valueType: 'photos',
     },
     {
       name: 'Bio',
       label:
         'Every Member can have a biography section giving a short description of them',
       value: false,
+      valueType: 'text',
     },
     {
       name: 'Nickname',
       label: 'Every member can have a nickname',
       value: false,
+      valueType: 'text',
     },
   ]
 
-  const [originalFields, setOriginalFields] = useState(secondExample)
+  const [originalFields, setOriginalFields] = useState(originalExample)
 
   return (
     <div>
