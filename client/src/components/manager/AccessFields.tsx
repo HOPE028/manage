@@ -88,6 +88,8 @@ export default function AccessFields(props: InterfaceInformationFields) {
         selectedField={generalMember}
         setSelectedField={setGeneralMember}
         handleFieldChange={handleChange}
+        page={props.page}
+        setPage={props.setPage}
       />
       <h4>Member</h4>
       <DifferentAccessLevels
@@ -100,6 +102,8 @@ export default function AccessFields(props: InterfaceInformationFields) {
         selectedField={memberMember}
         setSelectedField={setMemberMember}
         handleFieldChange={handleChange}
+        page={props.page}
+        setPage={props.setPage}
       />
       <h3>On All Individual Pages</h3>
       <h4>General</h4>
@@ -126,6 +130,8 @@ export default function AccessFields(props: InterfaceInformationFields) {
         selectedField={generalIndividual}
         setSelectedField={setGeneralIndividual}
         handleFieldChange={handleChange}
+        page={props.page}
+        setPage={props.setPage}
       />
       <h4>Member</h4>
       <input
@@ -151,6 +157,8 @@ export default function AccessFields(props: InterfaceInformationFields) {
         selectedField={memberIndividual}
         setSelectedField={setMemberIndividual}
         handleFieldChange={handleChange}
+        page={props.page}
+        setPage={props.setPage}
       />
       <button
         onClick={() =>
@@ -178,6 +186,8 @@ export default function AccessFields(props: InterfaceInformationFields) {
         setOriginalFields={props.setOriginalFields}
         showGeneralIndividual={showGeneralIndividual}
         showMemberIndividual={showMemberIndividual}
+        page={props.page}
+        setPage={props.setPage}
       />
     </div>
   )
@@ -440,6 +450,8 @@ function NextPage(props: dataToUploadToDatabase) {
       setDoc(showMemberIndividualRef, {
         Show: showMemberIndividual,
       })
+
+      props.setPage(props.page + 1)
     } catch (error) {
       console.log(error)
     }

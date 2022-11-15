@@ -22,7 +22,7 @@ export interface fieldInterface {
 }
 
 export default function SignUp() {
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(2)
   return (
     <div>
       {page == 1 && <PasswordAndEmail page={page} setPage={setPage} />}
@@ -85,6 +85,8 @@ function ClassRules(props: pageValues) {
             setFields={setFields}
             classPage={classPage}
             setClassPage={setClassPage}
+            page={props.page}
+            setPage={props.setPage}
           />
         )}
         <button onClick={() => console.log(fields, originalFields)}>
@@ -98,6 +100,8 @@ function ClassRules(props: pageValues) {
             setFields={setFields}
             classPage={classPage}
             setClassPage={setClassPage}
+            page={props.page}
+            setPage={props.setPage}
           />
         )}
       </div>
@@ -112,4 +116,6 @@ export interface InterfaceInformationFields {
   setFields: Function
   classPage: number
   setClassPage: Function
+  page: number
+  setPage: Function
 }
