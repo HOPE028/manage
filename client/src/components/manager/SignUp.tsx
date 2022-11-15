@@ -22,16 +22,21 @@ export interface fieldInterface {
 }
 
 export default function SignUp() {
-  const [page, setPage] = useState(2)
+  const [page, setPage] = useState(1)
   return (
     <div>
-      {page == 1 && <PasswordAndEmail />}
-      {page == 2 && <ClassRules />}
+      {page == 1 && <PasswordAndEmail page={page} setPage={setPage} />}
+      {page == 2 && <ClassRules page={page} setPage={setPage} />}
     </div>
   )
 }
 
-function ClassRules() {
+export interface pageValues {
+  page: number
+  setPage: Function
+}
+
+function ClassRules(props: pageValues) {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [classPage, setClassPage] = useState(1)

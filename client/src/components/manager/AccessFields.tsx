@@ -4,18 +4,13 @@ import { useAuth } from '../../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { db } from '../../firebase-config'
 import { InterfaceInformationFields } from './SignUp'
-import { classCode } from './PasswordAndEmail'
 import {
   exampleObject1,
   exampleObject2,
   exampleObject3,
   exampleObject4,
+  fieldChosen,
 } from './ExampleObjects'
-
-interface fieldChosen {
-  name: string
-  type: 'Custom' | 'Original'
-}
 
 export default function AccessFields(props: InterfaceInformationFields) {
   const [generalMember, setGeneralMember] = useState(exampleObject1)
@@ -25,28 +20,6 @@ export default function AccessFields(props: InterfaceInformationFields) {
 
   const [showGeneralIndividual, setShowGeneralIndividual] = useState(1)
   const [showMemberIndividual, setShowMemberIndividual] = useState(1)
-
-  const { currentUser } = useAuth()
-
-  const [userInformation, setUserInformation] = useState({})
-
-  useEffect(() => {
-    const getData = async () => {
-      const userRef = doc(db, 'Users', currentUser.uid)
-      const user: any = await getDoc(userRef)
-
-      console.log(user)
-
-      const userObject = {
-        classCode:
-          user._document.data.value.mapValue.fields.classCode.stringValue,
-        email: user._document.data.value.mapValue.fields.email.stringValue,
-        role: user._document.data.value.mapValue.fields.role.stringValue,
-      }
-      setUserInformation(userObject)
-    }
-    // getData()
-  }, [])
 
   const handleChange = (
     fields: Array<fieldChosen>,
@@ -98,34 +71,12 @@ export default function AccessFields(props: InterfaceInformationFields) {
     }
   }
 
-  const handlePageChange = async () => {
-    if (!userInformation) return
-
-    try {
-      console.log('here')
-
-      const rulesCollectionRef = collection(db, 'Class', classCode, 'Rules')
-
-      const docRef = doc(db, 'Class', classCode, 'Rules', 'General')
-
-      await setDoc(docRef, {
-        name: 'Rules',
-        test: 'Yes',
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   return (
     <div>
       <h3>Different Tiers Of Information Available</h3>
       <h3>On All Member Pages</h3>
-
       <h4>General</h4>
-
       <button onClick={() => console.log()}>Help me</button>
-
       <button onClick={() => console.log(generalMember)}>Data **</button>
       <DifferentAccessLevels
         originalFields={props.originalFields}
@@ -150,11 +101,8 @@ export default function AccessFields(props: InterfaceInformationFields) {
         setSelectedField={setMemberMember}
         handleFieldChange={handleChange}
       />
-
       <h3>On All Individual Pages</h3>
-
       <h4>General</h4>
-
       <input
         type='range'
         value={showGeneralIndividual}
@@ -180,7 +128,6 @@ export default function AccessFields(props: InterfaceInformationFields) {
         handleFieldChange={handleChange}
       />
       <h4>Member</h4>
-
       <input
         type='range'
         value={showMemberIndividual}
@@ -194,7 +141,6 @@ export default function AccessFields(props: InterfaceInformationFields) {
           )
         }
       />
-
       <DifferentAccessLevels
         originalFields={props.originalFields}
         setOriginalFields={props.setOriginalFields}
@@ -206,7 +152,6 @@ export default function AccessFields(props: InterfaceInformationFields) {
         setSelectedField={setMemberIndividual}
         handleFieldChange={handleChange}
       />
-
       <button
         onClick={() =>
           console.log(
@@ -220,7 +165,20 @@ export default function AccessFields(props: InterfaceInformationFields) {
         Data
       </button>
 
-      <button onClick={() => handlePageChange()}>Next</button>
+      <NextPage
+        memberMember={memberMember}
+        memberIndividual={memberIndividual}
+        generalIndividual={generalIndividual}
+        generalMember={generalMember}
+        classPage={props.classPage}
+        setClassPage={props.setClassPage}
+        fields={props.fields}
+        originalFields={props.originalFields}
+        setFields={props.setFields}
+        setOriginalFields={props.setOriginalFields}
+        showGeneralIndividual={showGeneralIndividual}
+        showMemberIndividual={showMemberIndividual}
+      />
     </div>
   )
 }
@@ -281,6 +239,215 @@ function DifferentAccessLevels(props: InterfaceInformationFieldsPlus) {
             </div>
           )
         })}
+    </div>
+  )
+}
+
+interface dataToUploadToDatabase extends InterfaceInformationFields {
+  generalMember: Array<fieldChosen>
+  memberMember: Array<fieldChosen>
+  generalIndividual: Array<fieldChosen>
+  memberIndividual: Array<fieldChosen>
+  showGeneralIndividual: number
+  showMemberIndividual: number
+}
+
+function NextPage(props: dataToUploadToDatabase) {
+  const { currentUser } = useAuth()
+
+  const [userInformation, setUserInformation] = useState({
+    classCode: 'false',
+    email: 'false',
+    role: 'false',
+  })
+
+  useEffect(() => {
+    const getData = async () => {
+      const userRef = doc(db, 'Users', currentUser.uid)
+      const user: any = await getDoc(userRef)
+
+      console.log(user)
+
+      const userObject = {
+        classCode:
+          user._document.data.value.mapValue.fields.classCode.stringValue,
+        email: user._document.data.value.mapValue.fields.email.stringValue,
+        role: user._document.data.value.mapValue.fields.role.stringValue,
+      }
+      setUserInformation(userObject)
+    }
+    getData()
+  }, [])
+
+  const handlePageChange = async () => {
+    if (userInformation.classCode === 'false') {
+      console.log('here?')
+      return
+    }
+
+    console.log('and here?')
+
+    try {
+      // const rulesCollectionRef = collection(
+      //   db,
+      //   'Class',
+      //   userInformation.classCode,
+      //   'Rules'
+      // )
+
+      //Information Required
+      // -> Custom
+
+      const customFieldsRef = collection(
+        db,
+        'Class',
+        userInformation.classCode,
+        'Rules',
+        'Information_Required',
+        'Custom'
+      )
+
+      props.fields.forEach((field) => {
+        addDoc(customFieldsRef, {
+          name: field.name,
+          valueType: field.valueType,
+        })
+      })
+
+      // -> General
+
+      const originalFieldsRef = collection(
+        db,
+        'Class',
+        userInformation.classCode,
+        'Rules',
+        'Information_Required',
+        'Original'
+      )
+
+      props.originalFields.forEach((field) => {
+        addDoc(originalFieldsRef, {
+          name: field.name,
+          value: field.value,
+          label: field.label,
+          valueType: field.valueType,
+        })
+      })
+
+      //General
+      // -> Member
+
+      const generalMemberRef = collection(
+        db,
+        'Class',
+        userInformation.classCode,
+        'Rules',
+        'General',
+        'Member'
+      )
+
+      props.generalMember.forEach((field) => {
+        addDoc(generalMemberRef, {
+          name: field.name,
+          type: field.type,
+        })
+      })
+      // -> Individual
+
+      const generalIndividualRef = collection(
+        db,
+        'Class',
+        userInformation.classCode,
+        'Rules',
+        'General',
+        'Individual'
+      )
+
+      props.generalIndividual.forEach((field) => {
+        addDoc(generalIndividualRef, {
+          name: field.name,
+          type: field.type,
+        })
+      })
+
+      const showGeneralIndividualRef = doc(
+        db,
+        'Class',
+        userInformation.classCode,
+        'Rules',
+        'General',
+        'Individual',
+        'Show'
+      )
+
+      const showGeneralIndividual =
+        props.showGeneralIndividual === 1 ? true : false
+
+      setDoc(showGeneralIndividualRef, {
+        Show: showGeneralIndividual,
+      })
+
+      //Member
+      // -> Member
+
+      const memberMemberRef = collection(
+        db,
+        'Class',
+        userInformation.classCode,
+        'Rules',
+        'Member',
+        'Member'
+      )
+
+      props.memberMember.forEach((field) => {
+        addDoc(memberMemberRef, {
+          name: field.name,
+          type: field.type,
+        })
+      })
+
+      // -> Individual
+
+      const memberIndividualRef = collection(
+        db,
+        'Class',
+        userInformation.classCode,
+        'Rules',
+        'Member',
+        'Individual'
+      )
+
+      props.memberIndividual.forEach((field) => {
+        addDoc(memberIndividualRef, {
+          name: field.name,
+          type: field.type,
+        })
+      })
+
+      const showMemberIndividualRef = doc(
+        db,
+        'Class',
+        userInformation.classCode,
+        'Rules',
+        'Member',
+        'Individual',
+        'Show'
+      )
+
+      const showMemberIndividual =
+        props.showMemberIndividual === 1 ? true : false
+
+      setDoc(showMemberIndividualRef, {
+        Show: showMemberIndividual,
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  return (
+    <div>
+      <button onClick={() => handlePageChange()}>Next</button>
     </div>
   )
 }

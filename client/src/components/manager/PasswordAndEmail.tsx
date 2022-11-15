@@ -4,10 +4,11 @@ import { useAuth } from '../../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
 import { db } from '../../firebase-config'
 import { map } from '@firebase/util'
+import { pageValues } from './SignUp'
 
 export const classCode = randomNumberGenerator(9)
 
-export default function PasswordAndEmail() {
+export default function PasswordAndEmail(props: pageValues) {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
@@ -88,6 +89,7 @@ export default function PasswordAndEmail() {
       // })
 
       // navigate('')
+      props.setPage(props.page + 1)
     } catch (error) {
       console.log(error)
       setError('Failed To Create An Account')

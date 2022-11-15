@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-interface fieldChosen {
+export interface fieldChosen {
   name: string
   type: 'Custom' | 'Original'
 }
