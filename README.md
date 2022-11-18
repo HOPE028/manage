@@ -14,3 +14,6 @@ Manage is a **Web App** created for teams tracking the **hours** members are wor
 A *Manager* creates a new `Team` where they choose what information any `Member` joining must sumbit. Upon choosing all the `team` settings, they will receive a **team code**. They can share that team code with whatever other potential members they would like to. The member would then use the team code to create an account and join the team. Upon joining the team, they will have access to whatever information the Manager has given them access to about other team members, the amount of hours they have been working, ... To be continued. 
 
 
+
+
+
