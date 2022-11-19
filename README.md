@@ -2,16 +2,29 @@
 
 ---
 
-*Ongoing project...*
+***Ongoing project...***
+
+ Terminology: 
+ * Manager -> Person who generally created the team and has moderator permissions.
+ * Member -> Person who is part of the team.
+ * General -> Person viewing the team but is not a member or manager. 
 
 
 ## What 
 
-Manage is a **Web App** created for teams tracking the **hours** members are working/volunteering/practicing. Aside from offering hour tracking abilities, it offers comprehensive **social media** capabilities such as **messaging** other team members, seeing other **members information**, and having comprehensive ways of seeing how your hours have been **changing**.
+Manage is a **Web App** created for teams tracking the **hours** members are working/volunteering/practicing. Aside from offering hour tracking abilities, it offers comprehensive **social media** capabilities such as **messaging** other team members, seeing other **members information**, having comprehensive ways of seeing how your hours have been **changing**, and most importantly having completely customizable information access and member information security. 
 
 ## How It Works
 
-A *Manager* creates a new `Team` where they choose what information any `Member` joining must sumbit. Upon choosing all the `team` settings, they will receive a **team code**. They can share that team code with whatever other potential members they would like to. The member would then use the team code to create an account and join the team. Upon joining the team, they will have access to whatever information the Manager has given them access to about other team members, the amount of hours they have been working, ... To be continued. 
+### Creating the team & choosing team settings.
+
+A *Manager* creates a new `Team` where they choose what information any **Member** joining must submit. Upon choosing the information required by members, what information is accessible to others depending on their access level, and certain team settings, they will receive a **team code**. They can share that team code with members wanting to join the team. 
+
+### Joining the team
+
+Upon entering the team code given to the member by the manager, they will be presented with the fields the manager requires them to fill out. Upon filling them in, their profile will be submitted to the manager. Once the manager gives permission for the member to join, the member will be part of the team.
+
+### To be continued. 
 
 
 
