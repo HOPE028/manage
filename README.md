@@ -12,7 +12,7 @@
 
 ## What 
 
-Manage is a **Web App** created for teams tracking the **hours** members are working/volunteering/practicing. Aside from offering hour tracking abilities, it offers comprehensive **social media** capabilities such as **messaging** other team members, seeing other **members information**, having comprehensive ways of seeing how your hours have been **changing**, and most importantly having completely customizable information access and member information security. 
+Manage is a **Web App** created for teams to track the **hours** members are working/volunteering/practicing. Aside from offering hour tracking abilities, it offers comprehensive **social media** capabilities such as **messaging** other team members, seeing other **member's information**, having comprehensive ways of seeing how your hours have been **changing**, and most importantly having completely customizable information access and member information security. 
 
 ## How It Works
 
@@ -22,7 +22,7 @@ A *Manager* creates a new `Team` where they choose what information any **Member
 
 ### Joining the team
 
-Upon entering the team code given to the member by the manager, they will be presented with the fields the manager requires them to fill out. Upon filling them in, their profile will be submitted to the manager. Once the manager gives permission for the member to join, the member will be part of the team.
+Upon entering the team code given to the member by the manager, they will be presented with the fields the manager requires them to fill out. Upon filling them in, their profile will be submitted to the manager. Once the manager permits for the member to join, the member will be part of the team.
 
 ### To be continued. 
 
