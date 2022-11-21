@@ -8,6 +8,7 @@ import InformationFields from './InformationFields'
 import PasswordAndEmail from './PasswordAndEmail'
 import AccessFields from './AccessFields'
 import TeamInformation from './TeamInformation'
+import SignUpEveryone from '../SignUpEveryone'
 // import Informatio
 
 export interface customFieldInterface {
@@ -23,11 +24,12 @@ export interface fieldInterface {
 }
 
 export default function SignUp() {
-  const [page, setPage] = useState(2)
+  const [page, setPage] = useState(3)
   return (
     <div>
       {page == 1 && <PasswordAndEmail page={page} setPage={setPage} />}
       {page == 2 && <ClassRules page={page} setPage={setPage} />}
+      {page == 3 && <SignUpEveryone role='Manager' />}
     </div>
   )
 }

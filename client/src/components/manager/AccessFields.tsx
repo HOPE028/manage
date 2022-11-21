@@ -265,40 +265,20 @@ interface dataToUploadToDatabase extends InterfaceInformationFields {
 }
 
 function NextPage(props: dataToUploadToDatabase) {
-  const { currentUser } = useAuth()
-
-  const [userInformation, setUserInformation] = useState({
-    classCode: 'false',
-    email: 'false',
-    role: 'false',
-  })
-
-  useEffect(() => {
-    const getData = async () => {
-      const userRef = doc(db, 'Users', currentUser.uid)
-      const user: any = await getDoc(userRef)
-
-      console.log(user)
-
-      const userObject = {
-        classCode:
-          user._document.data.value.mapValue.fields.classCode.stringValue,
-        email: user._document.data.value.mapValue.fields.email.stringValue,
-        role: user._document.data.value.mapValue.fields.role.stringValue,
-      }
-      setUserInformation(userObject)
-    }
-    getData()
-  }, [])
+  const { currentUser, currentUserInformation } = useAuth()
 
   const handlePageChange = async () => {
+    if (!currentUserInformation) {
+      return
+    }
+
     try {
       // Name
 
       const teamNameRef = doc(
         db,
         'Class',
-        userInformation.classCode,
+        currentUserInformation.teamCode,
         'Settings',
         'Name'
       )
@@ -312,7 +292,7 @@ function NextPage(props: dataToUploadToDatabase) {
       const editInformationRef = doc(
         db,
         'Class',
-        userInformation.classCode,
+        currentUserInformation.teamCode,
         'Settings',
         'canEditInformation'
       )
@@ -320,7 +300,7 @@ function NextPage(props: dataToUploadToDatabase) {
       const editInformationConverted = props.editInformation == 1
 
       setDoc(editInformationRef, {
-        Value: props.teamName,
+        Value: editInformationConverted,
       })
 
       // Custom Fields
@@ -328,7 +308,7 @@ function NextPage(props: dataToUploadToDatabase) {
       const customFieldsRef = collection(
         db,
         'Class',
-        userInformation.classCode,
+        currentUserInformation.teamCode,
         'Rules',
         'Information_Required',
         'Custom'
@@ -346,7 +326,7 @@ function NextPage(props: dataToUploadToDatabase) {
       const originalFieldsRef = collection(
         db,
         'Class',
-        userInformation.classCode,
+        currentUserInformation.teamCode,
         'Rules',
         'Information_Required',
         'Original'
@@ -367,7 +347,7 @@ function NextPage(props: dataToUploadToDatabase) {
       const generalMemberRef = collection(
         db,
         'Class',
-        userInformation.classCode,
+        currentUserInformation.teamCode,
         'Rules',
         'General',
         'Member'
@@ -384,7 +364,7 @@ function NextPage(props: dataToUploadToDatabase) {
       const generalIndividualRef = collection(
         db,
         'Class',
-        userInformation.classCode,
+        currentUserInformation.teamCode,
         'Rules',
         'General',
         'Individual'
@@ -400,7 +380,7 @@ function NextPage(props: dataToUploadToDatabase) {
       const showGeneralIndividualRef = doc(
         db,
         'Class',
-        userInformation.classCode,
+        currentUserInformation.teamCode,
         'Rules',
         'General',
         'Individual',
@@ -420,7 +400,7 @@ function NextPage(props: dataToUploadToDatabase) {
       const memberMemberRef = collection(
         db,
         'Class',
-        userInformation.classCode,
+        currentUserInformation.teamCode,
         'Rules',
         'Member',
         'Member'
@@ -438,7 +418,7 @@ function NextPage(props: dataToUploadToDatabase) {
       const memberIndividualRef = collection(
         db,
         'Class',
-        userInformation.classCode,
+        currentUserInformation.teamCode,
         'Rules',
         'Member',
         'Individual'
@@ -454,7 +434,7 @@ function NextPage(props: dataToUploadToDatabase) {
       const showMemberIndividualRef = doc(
         db,
         'Class',
-        userInformation.classCode,
+        currentUserInformation.teamCode,
         'Rules',
         'Member',
         'Individual',
