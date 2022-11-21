@@ -57,9 +57,10 @@ export function AuthProvider({ children }) {
     setCurrentUserInformation(userObject)
   }
 
-  onAuthStateChanged(auth, (currentUser) => {
-    setCurrentUser(currentUser)
-    getUserInformation(currentUser)
+  onAuthStateChanged(auth, async (currentUser) => {
+    await getUserInformation(currentUser)
+    await setCurrentUser(currentUser)
+
     setLoading(false)
   })
 
