@@ -188,6 +188,8 @@ export default function AccessFields(props: InterfaceInformationFields) {
         showMemberIndividual={showMemberIndividual}
         page={props.page}
         setPage={props.setPage}
+        teamName={props.teamName}
+        editInformation={props.editInformation}
       />
     </div>
   )
@@ -290,23 +292,38 @@ function NextPage(props: dataToUploadToDatabase) {
   }, [])
 
   const handlePageChange = async () => {
-    if (userInformation.classCode === 'false') {
-      console.log('here?')
-      return
-    }
-
-    console.log('and here?')
-
     try {
-      // const rulesCollectionRef = collection(
-      //   db,
-      //   'Class',
-      //   userInformation.classCode,
-      //   'Rules'
-      // )
+      // Name
 
-      //Information Required
-      // -> Custom
+      const teamNameRef = doc(
+        db,
+        'Class',
+        userInformation.classCode,
+        'Settings',
+        'Name'
+      )
+
+      setDoc(teamNameRef, {
+        Value: props.teamName,
+      })
+
+      // Can edit information
+
+      const editInformationRef = doc(
+        db,
+        'Class',
+        userInformation.classCode,
+        'Settings',
+        'canEditInformation'
+      )
+
+      const editInformationConverted = props.editInformation == 1
+
+      setDoc(editInformationRef, {
+        Value: props.teamName,
+      })
+
+      // Custom Fields
 
       const customFieldsRef = collection(
         db,

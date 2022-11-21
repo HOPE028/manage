@@ -7,6 +7,7 @@ import { db } from '../../firebase-config'
 import InformationFields from './InformationFields'
 import PasswordAndEmail from './PasswordAndEmail'
 import AccessFields from './AccessFields'
+import TeamInformation from './TeamInformation'
 // import Informatio
 
 export interface customFieldInterface {
@@ -40,6 +41,8 @@ function ClassRules(props: pageValues) {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [classPage, setClassPage] = useState(1)
+  const [teamName, setTeamName] = useState('')
+  const [editInformation, setEditInformation] = useState(1)
 
   let customExample: Array<customFieldInterface>
 
@@ -78,6 +81,16 @@ function ClassRules(props: pageValues) {
       <div>
         <h1>Class Settings</h1>
         {classPage == 1 && (
+          <TeamInformation
+            teamName={teamName}
+            setTeamName={setTeamName}
+            editInformation={editInformation}
+            setEditInformation={setEditInformation}
+            teamPage={classPage}
+            setTeamPage={setClassPage}
+          />
+        )}
+        {classPage == 2 && (
           <InformationFields
             originalFields={originalFields}
             setOriginalFields={setOriginalFields}
@@ -89,10 +102,7 @@ function ClassRules(props: pageValues) {
             setPage={props.setPage}
           />
         )}
-        <button onClick={() => console.log(fields, originalFields)}>
-          Data
-        </button>
-        {classPage == 2 && (
+        {classPage == 3 && (
           <AccessFields
             originalFields={originalFields}
             setOriginalFields={setOriginalFields}
@@ -102,6 +112,8 @@ function ClassRules(props: pageValues) {
             setClassPage={setClassPage}
             page={props.page}
             setPage={props.setPage}
+            teamName={teamName}
+            editInformation={editInformation}
           />
         )}
       </div>
@@ -118,4 +130,6 @@ export interface InterfaceInformationFields {
   setClassPage: Function
   page: number
   setPage: Function
+  teamName?: string
+  editInformation?: number
 }
