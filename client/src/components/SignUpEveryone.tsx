@@ -10,6 +10,7 @@ import {
   QueryDocumentSnapshot,
   DocumentData,
 } from 'firebase/firestore'
+import { resourceLimits } from 'worker_threads'
 
 interface InterfaceSignUpEveryone {
   role: 'Manager' | 'Member'
@@ -37,10 +38,10 @@ export default function SignUpEveryone(props: InterfaceSignUpEveryone) {
   // let any2: InterfaceInformation
   // any2 = { id: 'random' }
   const [originalFields, setOriginalFields] = useState<
-    QueryDocumentSnapshot<DocumentData>[]
+    InterfaceOriginalInformation[]
   >([])
   const [customFields, setCustomFields] = useState<
-    QueryDocumentSnapshot<DocumentData>[]
+    InterfaceCustomInformation[]
   >([])
 
   useEffect(() => {
@@ -71,28 +72,48 @@ export default function SignUpEveryone(props: InterfaceSignUpEveryone) {
 
     const originalData = await getDocs(refOriginalFields)
 
-    // console.log(JSON.stringify(info))
+    let result: any = []
+    // originalData.forEach((snapshot) => {
+    //   result.push(snapshot)
+    // })
 
-    setOriginalFields(
-      originalData.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-    )
+    result = originalData.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+
+    setOriginalFields(result)
+
+    // setOriginalFields(
+    //   originalData.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    // )
 
     const customData = await getDocs(refCustomFields)
-    setCustomFields(
-      customData.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-    )
+
+    result = customData.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+
+    setCustomFields(result)
   }
   return (
     <div>
-      <h1>Sign Up!</h1>
-      {/* <div>
-        {customFields.map((field) => {
-          ;<div key={field.id}>
-            <h2>{field.name}</h2>
-          </div>
+      {/* <h1>Sign Up!</h1> */}
+
+      {customFields &&
+        customFields.map((field) => {
+          return (
+            <div key={field.id}>
+              <h3>{field.name}</h3>
+            </div>
+          )
         })}
-      </div> */}
-      <button onClick={() => console.log(customFields)}>DATA</button>
+
+      {originalFields &&
+        originalFields.map((field) => {
+          return (
+            <div key={field.id}>
+              <h3>{field.name}</h3>
+            </div>
+          )
+        })}
+
+      {/* <button onClick={() => console.log(originalFields)}>DATA</button> */}
     </div>
   )
 }
