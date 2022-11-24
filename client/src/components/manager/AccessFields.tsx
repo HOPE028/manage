@@ -332,14 +332,16 @@ function NextPage(props: dataToUploadToDatabase) {
         'Original'
       )
 
-      props.originalFields.forEach((field) => {
-        addDoc(originalFieldsRef, {
-          name: field.name,
-          value: field.value,
-          label: field.label,
-          valueType: field.valueType,
+      props.originalFields
+        .filter((field) => field.value === true)
+        .forEach((field) => {
+          addDoc(originalFieldsRef, {
+            name: field.name,
+            value: field.value,
+            label: field.label,
+            valueType: field.valueType,
+          })
         })
-      })
 
       //General
       // -> Member

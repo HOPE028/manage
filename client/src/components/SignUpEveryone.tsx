@@ -33,10 +33,6 @@ interface InterfaceCustomInformation {
 export default function SignUpEveryone(props: InterfaceSignUpEveryone) {
   const { currentUser, currentUserInformation } = useAuth()
 
-  // let any1: InterfaceInformation
-  // any1 = { id: 'random' }
-  // let any2: InterfaceInformation
-  // any2 = { id: 'random' }
   const [originalFields, setOriginalFields] = useState<
     InterfaceOriginalInformation[]
   >([])
@@ -45,7 +41,6 @@ export default function SignUpEveryone(props: InterfaceSignUpEveryone) {
   >([])
 
   useEffect(() => {
-    console.log(currentUserInformation)
     if (currentUserInformation) {
       getData()
     }
@@ -73,23 +68,16 @@ export default function SignUpEveryone(props: InterfaceSignUpEveryone) {
     const originalData = await getDocs(refOriginalFields)
 
     let result: any = []
-    // originalData.forEach((snapshot) => {
-    //   result.push(snapshot)
-    // })
 
     result = originalData.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
 
-    setOriginalFields(result)
-
-    // setOriginalFields(
-    //   originalData.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-    // )
+    await setOriginalFields(result)
 
     const customData = await getDocs(refCustomFields)
 
     result = customData.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
 
-    setCustomFields(result)
+    await setCustomFields(result)
   }
   return (
     <div>
