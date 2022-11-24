@@ -101,6 +101,12 @@ export default function SignUpEveryone(props: InterfaceSignUpEveryone) {
           )
         })}
 
+      <input
+        type='file'
+        onChange={(e) => console.log(e.target.size)}
+        accept='image/png, image/jpeg'
+      />
+
       {/* <button onClick={() => console.log(originalFields)}>DATA</button> */}
     </div>
   )

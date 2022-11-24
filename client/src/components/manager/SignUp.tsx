@@ -24,7 +24,7 @@ export interface fieldInterface {
 }
 
 export default function SignUp() {
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(3)
   return (
     <div>
       {page == 1 && <PasswordAndEmail page={page} setPage={setPage} />}
