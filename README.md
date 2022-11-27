@@ -26,6 +26,8 @@ Upon entering the team code given to the member by the manager, they will be pre
 
 ### View personal and others info.
 
+Once you are on the team, you are subject to the rules and settings the manager chose when they created the account at first. 
+
 ### ** To be continued **
 
 
